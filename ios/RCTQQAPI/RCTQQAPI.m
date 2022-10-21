@@ -45,7 +45,6 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(init:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    [self _autoRegisterAPI];
     [TencentOAuth setIsUserAgreedAuthorization:YES];
     resolve([NSNumber numberWithBool:YES]);
 }
@@ -96,6 +95,7 @@ RCT_EXPORT_METHOD(isQQSupportApi:(RCTPromiseResolveBlock)resolve reject:(RCTProm
 
 RCT_EXPORT_METHOD(login:(NSString *)scopes resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
+    [self _autoRegisterAPI];
     NSArray *scopeArray = nil;
     if (scopes && scopes.length) {
         scopeArray = [scopes componentsSeparatedByString:@","];
@@ -114,11 +114,13 @@ RCT_EXPORT_METHOD(login:(NSString *)scopes resolve:(RCTPromiseResolveBlock)resol
 
 RCT_EXPORT_METHOD(shareToQQ:(NSDictionary *)data resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
+    [self _autoRegisterAPI];
     [self _shareToQQWithData:data scene:0 resolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(shareToQzone:(NSDictionary *)data resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
+    [self _autoRegisterAPI];
     [self _shareToQQWithData:data scene:1 resolve:resolve reject:reject];
 }
 
@@ -218,7 +220,6 @@ RCT_EXPORT_METHOD(logout)
         reject(@"-1",INVOKE_FAILED,nil);
     }
 }
-
 
 - (void)_autoRegisterAPI
 {
