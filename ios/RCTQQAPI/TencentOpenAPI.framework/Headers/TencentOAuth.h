@@ -7,7 +7,7 @@
 ///
 
 #import <UIKit/UIKit.h>
-#import "sdkdef.h"
+#import "SDKDef.h"
 
 @protocol TencentSessionDelegate;
 @protocol TencentLoginDelegate;
@@ -37,54 +37,54 @@ typedef NS_ENUM(NSUInteger, TencentAuthMode) {
  */
 @interface TencentOAuth : NSObject
 {
-    NSMutableDictionary* _apiRequests;
-	NSString* _accessToken;
-	NSDate* _expirationDate;
+    NSMutableDictionary *_apiRequests;
+	NSString *_accessToken;
+	NSDate *_expirationDate;
 	id<TencentSessionDelegate> _sessionDelegate;
-	NSString* _localAppId;
-	NSString* _openId;
-	NSString* _redirectURI;
-	NSArray* _permissions;
+	NSString *_localAppId;
+	NSString *_openId;
+	NSString *_redirectURI;
+	NSArray *_permissions;
 }
 
 /** Access Token凭证，用于后续访问各开放接口 */
-@property(nonatomic, copy) NSString* accessToken;
+@property(nonatomic, copy) NSString *accessToken;
 
 /** Access Token的失效期 */
-@property(nonatomic, copy) NSDate* expirationDate;
+@property(nonatomic, copy) NSDate *expirationDate;
 
 /** 已实现的开放接口的回调委托对象 */
-@property(nonatomic, assign) id<TencentSessionDelegate> sessionDelegate;
+@property(nonatomic, weak) id<TencentSessionDelegate> sessionDelegate;
 
 /** 第三方应用在开发过程中设置的URLSchema，用于浏览器登录后后跳到第三方应用 */
-@property(nonatomic, copy) NSString* localAppId;
+@property(nonatomic, copy) NSString *localAppId;
 
 /** 用户授权登录后对该用户的唯一标识 */
-@property(nonatomic, copy) NSString* openId;
+@property(nonatomic, copy) NSString *openId;
 
 /** 用户登录成功过后的跳转页面地址 */
-@property(nonatomic, copy) NSString* redirectURI;
+@property(nonatomic, copy) NSString *redirectURI;
 
 /** 第三方应用在互联开放平台申请的appID */
-@property(nonatomic, retain) NSString* appId;
+@property(nonatomic, retain) NSString *appId;
 
 /** 第三方应用在互联开放平台注册的UniversalLink */
-@property(nonatomic, retain) NSString* universalLink;
+@property(nonatomic, retain) NSString *universalLink;
 
 /** 主要是互娱的游戏设置uin */
-@property(nonatomic, retain) NSString* uin;
+@property(nonatomic, retain) NSString *uin;
 
 /** 主要是互娱的游戏设置鉴定票据 */
-@property(nonatomic, retain) NSString* skey;
+@property(nonatomic, retain) NSString *skey;
 
 /** 登陆透传的数据 */
-@property(nonatomic, copy) NSDictionary* passData;
+@property(nonatomic, copy) NSDictionary *passData;
 
 /** 授权方式(Client Side Token或者Server Side Code) */
 @property(nonatomic, assign) TencentAuthMode authMode;
 
 /** union id */
-@property(nonatomic, retain) NSString* unionid;
+@property(nonatomic, retain) NSString *unionid;
 
 /** 第三方在授权登录/分享 时选择 QQ，还是TIM 。在授权前一定要指定其中一个类型*/
 @property(nonatomic, assign) TencentAuthShareType authShareType;
@@ -123,14 +123,14 @@ typedef NS_ENUM(NSUInteger, TencentAuthMode) {
  * \return 返回sdk版本号
  **/
 
-+ (NSString*)sdkVersion;
++ (NSString *)sdkVersion;
 
 /**
  * 用来获得当前sdk的小版本号
  * \return 返回sdk小版本号
  **/
 
-+ (NSString*)sdkSubVersion;
++ (NSString *)sdkSubVersion;
 
 /**
  * 用来获得当前sdk的是否精简版
@@ -148,19 +148,6 @@ typedef NS_ENUM(NSUInteger, TencentAuthMode) {
  **/
 
 + (TencentAuthorizeState *)authorizeState;
-
-/**
- * 用来获得当前手机qq的版本号
- * \return 返回手机qq版本号
- **/
-+ (int)iphoneQQVersion __attribute__((deprecated("已过期, 建议删除调用")));
-
-
-/**
- * 用来获得当前手机TIM的版本号
- * \return 返回手机qq版本号
- **/
-+ (int)iphoneTIMVersion __attribute__((deprecated("已过期, 建议删除调用")));
 
 /**
  * 初始化TencentOAuth对象
@@ -206,6 +193,21 @@ typedef NS_ENUM(NSUInteger, TencentAuthMode) {
            delegate:(id<TencentSessionDelegate>)delegate;
 
 /**
+ * 设置用户是否已经授权同意授权隐私协议，在主体应用中，用户同意授权隐私协议后再初始化互联SDK，默认未同意授权
+ * 注意：如未同意授权隐私协议，则互联SDK的所有功能都无法使用，包括初始化！！！
+ * 从3.5.7版本开始支持该方法
+ *
+ * @param isAgreedAuthorization 是否已经授权，isAgreedAuthorization=YES, 表示已经同意授权；isAgreedAuthorization=NO，表示未同意授权，互联SDK的所有功能都无法使用
+ */
++ (void)setIsUserAgreedAuthorization:(BOOL)isUserAgreedAuthorization;
+
+/**
+ * 获取当前用户是否已经同意授权隐私协议
+ * 从3.5.7版本开始支持该方法
+ */
++ (BOOL)isUserAgreedAuthorization;
+
+/**
  * 判断用户手机上是否安装手机QQ
  * \return YES:安装 NO:没安装
  *
@@ -226,18 +228,6 @@ typedef NS_ENUM(NSUInteger, TencentAuthMode) {
 + (BOOL)iphoneTIMInstalled;
  
 /**
- * 判断用户手机上的手机QQ是否支持SSO登录
- * \return YES:支持 NO:不支持
- */
-+ (BOOL)iphoneQQSupportSSOLogin __attribute__((deprecated("QQ版本均支持SSO登录。该接口已过期, 建议删除调用")));
-
-/**
- * 判断用户手机上的手机TIM是否支持SSO登录
- * \return YES:支持 NO:不支持
- */
-+ (BOOL)iphoneTIMSupportSSOLogin __attribute__((deprecated("TIM版本均支持SSO登录。该接口已过期, 建议删除调用")));
-
-/**
  * 登录授权
  *
  * \param permissions 授权信息列
@@ -247,20 +237,10 @@ typedef NS_ENUM(NSUInteger, TencentAuthMode) {
 /**
  * 登录授权
  * \param permissions 授权信息列表
- * \param bInSafari 是否使用safari进行登录.<b>IOS SDK 1.3版本开始此参数废除</b>
- */
-- (BOOL)authorize:(NSArray *)permissions
-		 inSafari:(BOOL)bInSafari;
-
-/**
- * 登录授权
- * \param permissions 授权信息列表
  * \param localAppId 应用APPID
- * \param bInSafari 是否使用safari进行登录.<b>IOS SDK 1.3版本开始此参数废除</b>
  */
 - (BOOL)authorize:(NSArray *)permissions
-       localAppId:(NSString *)localAppId
-		 inSafari:(BOOL)bInSafari;
+       localAppId:(NSString *)localAppId;
 
 /**
  * 登录授权<web为二维码扫码方式>
@@ -406,7 +386,7 @@ typedef NS_ENUM(NSUInteger, TencentAuthMode) {
 /**
  * 登录时权限信息的获得
  */
-- (NSArray *)getAuthorizedPermissions:(NSArray *)permissions withExtraParams:(NSDictionary *)extraParams;
+- (NSArray *)getAuthorizedPermissions:(NSArray *)permissions withExtraParams:(NSDictionary *)extraParams __attribute__((deprecated("该接口已过期, 建议删除调用")));
 
 /**
  * unionID获得
