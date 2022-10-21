@@ -1,4 +1,13 @@
 module TencentOpenApi{
+    header "QQApiInterface.h"
+
+    header "QQApiInterfaceObject.h"
+
+    header "TencentOAuth.h"
+
+    header "TencentOpenApiUmbrellaHeader.h"
+
+    header "sdkdef.h"
     umbrella header "TencentOpenApiUmbrellaHeader.h"
     export *
 }
