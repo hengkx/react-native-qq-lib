@@ -43,14 +43,11 @@ RCT_EXPORT_MODULE();
     return @[@"QQ_Resp"];
 }
 
-- (instancetype)init
+RCT_EXPORT_METHOD(init:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    self = [super init];
-    if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOpenURL:) name:@"RCTOpenURLNotification" object:nil];
-        [self _autoRegisterAPI];
-    }
-    return self;
+    [self _autoRegisterAPI];
+    [TencentOAuth setIsUserAgreedAuthorization:YES];
+    resolve([NSNumber numberWithBool:YES]);
 }
 
 - (void)dealloc
