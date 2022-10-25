@@ -7,11 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application>
-
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
-
         <meta-data
             android:name="QQ_APPID"
             android:value="${QQ_APPID}" />
@@ -32,7 +27,8 @@
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind" 
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <provider
