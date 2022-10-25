@@ -26,6 +26,6 @@ repositories {
 
 dependencies {
   implementation 'com.facebook.react:react-native:+'
-  implementation 'com.tencent.tauth:qqopensdk:3.5.13.1'
+  implementation 'com.tencent.tauth:qqopensdk:3.53.0'
 }
 
